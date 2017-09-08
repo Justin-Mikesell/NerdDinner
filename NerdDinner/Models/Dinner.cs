@@ -39,10 +39,10 @@ namespace NerdDinner.Models
             {
                 yield return new RuleViolation("Phone# Required", "ContactPhone");
             }
-            if (!PhoneValidator.IsValidNumber(ContactPhone, Country))
-            {
-                yield return new RuleViolation("Phone# does not match country", "ContactPhone");
-            }
+            //if (!PhoneValidator.IsValidNumber(ContactPhone, Country))
+            //{
+            //    yield return new RuleViolation("Phone# does not match country", "ContactPhone");
+            //}
 
             yield break;
         }

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace NerdDinner.Models
 {
+    /*
     public class PhoneValidator
     {
         static IDictionary<string, Regex> countryRegex = new Dictionary<string, Regex>()
@@ -30,6 +31,9 @@ namespace NerdDinner.Models
         {
             get { return countryRegex.Keys; }
         }
+        
 
     }
+
+    */
 }
