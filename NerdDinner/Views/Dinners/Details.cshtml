@@ -4,52 +4,29 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
-<fieldset>
-    <legend>Fields</legend>
-    <p>
-        DinnerID:    
-        @Model.DinnerID
-    </p>
-    <p>
-        Title:
-        @Model.Title
-    </p>
-    <p>
-        EventDate:
-        @String.Format("{0:g}", Model.EventDate)
-    </p>
-    <p>
-        Description:
-        @Model.Description
-    </p>
-    <p>
-        HostedBy:
-        @Model.Host
-    </p>
-    <p>
-        ContactPhone:
-        @Model.ContactPhone
-    </p>
-    <p>
-        Address:
-        @Model.Address
-    </p>
-    <p>
-        Country:
-        @Model.Country
-    </p>
-    <p>
-        Latitude: 
-        @String.Format("{0:F}", Model.Latitude)
-    </p>
-    <p>
-        Longitude
-        @String.Format("{0:F}", Model.Longitude)
-    </p>
-</fieldset>
+<p>
+    <strong>When:</strong>
+    @Model.EventDate.ToShortDateString()
 
+    <strong>At:</strong>
+    @Model.EventDate.ToShortTimeString()
+</p>
+<p>
+    <strong>Where:</strong>
+    @Model.Address
+    @Model.Country
+</p>
+<p>
+    <strong>Description:</strong>
+    @Model.Description
+</p>
+<p>
+    <strong>Organizer:</strong>
+    @Model.Host - 
+    @Model.ContactPhone
+</p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.DinnerID }) |
     @Html.ActionLink("Back to List", "Index")

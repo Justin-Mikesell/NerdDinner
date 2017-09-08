@@ -1,0 +1,22 @@
+﻿@model NerdDinner.Models.Dinner
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upcoming Dinners</h2>
+
+<ul>
+    
+    @foreach(var dinner in Model)
+    {
+        <li>
+            @dinner.Title
+            on
+            @dinner.EventDate.ToShortDateString()
+            at
+            @dinner.EventDate.ToShortDateString()
+        </li>
+    }
+</ul>
+

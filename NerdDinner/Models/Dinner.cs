@@ -8,6 +8,8 @@ namespace NerdDinner.Models
 {
     public partial class Dinner
     {
+        
+        
         public bool IsValid
         {
             get { return (GetRuleViolations().Count() == 0); }
@@ -55,6 +57,8 @@ namespace NerdDinner.Models
             }
         }
     }
+
+   
 
     public class RuleViolation
     {
