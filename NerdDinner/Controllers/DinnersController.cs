@@ -16,7 +16,7 @@ namespace NerdDinner.Controllers
         {
             var dinners = dinnerRepository.FindUpcomingDinners().ToList();
 
-            return View("Index", dinners);
+            return View(dinners);
         }
 
         // HTTP-GET /DinnersDetails/2
@@ -30,8 +30,17 @@ namespace NerdDinner.Controllers
             }
             else
             {
-                return View("Details", dinner);
+                return View(dinner);
             }
+        }
+
+        //get: Dinners/edit/{id}
+
+        public ActionResult Edit(int id)
+        {
+            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+
+            return View(dinner);
         }
     }
 }

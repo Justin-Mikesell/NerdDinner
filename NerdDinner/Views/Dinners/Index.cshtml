@@ -11,7 +11,7 @@
     @foreach(var dinner in Model)
     {
         <li>
-            @dinner.Title
+            @Html.ActionLink(dinner.Title, "Details", new { id = dinner.DinnerID })
             on
             @dinner.EventDate.ToShortDateString()
             at
