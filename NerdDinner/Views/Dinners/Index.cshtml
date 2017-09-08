@@ -1,4 +1,4 @@
-﻿@model NerdDinner.Models.Dinner
+﻿@model List<NerdDinner.Models.Dinner>
 
 @{
     ViewBag.Title = "Index";
@@ -15,7 +15,7 @@
             on
             @dinner.EventDate.ToShortDateString()
             at
-            @dinner.EventDate.ToShortDateString()
+            @dinner.EventDate.ToShortTimeString()
         </li>
     }
 </ul>
