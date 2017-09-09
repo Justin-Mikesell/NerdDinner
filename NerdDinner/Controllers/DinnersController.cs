@@ -42,5 +42,98 @@ namespace NerdDinner.Controllers
 
             return View(dinner);
         }
+
+
+        // saves edited changes to a dinner
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Edit(int id, FormCollection formValues)
+        {
+            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+
+            try
+            {
+                UpdateModel(dinner);
+
+                dinnerRepository.Save();
+
+                return RedirectToAction("Details", new { id = dinner.DinnerID });
+            }
+
+            catch 
+            {
+                foreach(var issue in dinner.GetRuleViolations())
+                {
+                    ModelState.AddModelError(issue.PropertyName, issue.ErrorMessage);
+                }
+            }
+
+            return View(dinner);
+        }
+        // creates a new form for a dinner
+        public ActionResult Create()
+        {
+            Models.Dinner dinner = new Models.Dinner() { EventDate = DateTime.Now.AddDays(7) };
+
+            return View(dinner);
+        }
+        
+        //Saves and adds dinner to db
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Create(Models.Dinner dinner)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    dinner.Host = "SomeUser";
+
+                    dinnerRepository.Add(dinner);
+                    dinnerRepository.Save();
+
+                    return RedirectToAction("Details", new { id = dinner.DinnerID });
+                }
+                catch
+                {
+                    foreach (var issue in dinner.GetRuleViolations())
+                    {
+                        ModelState.AddModelError(issue.PropertyName, issue.ErrorMessage);
+                    }
+                }
+            }
+            
+            return View(dinner);
+        }
+
+        //Delete a dinner
+        public ActionResult Delete(int id)
+        {
+            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+
+            if (dinner == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                return View(dinner);
+            }
+        }
+
+        //Saves and removes the dinner from db
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(int id, string confirmButton)
+        {
+            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+
+            if (dinner == null)
+            {
+                return View("NotFound");
+            }
+
+            dinnerRepository.Delete(dinner);
+            dinnerRepository.Save();
+
+            return View("Deleted");
+        }
     }
 }

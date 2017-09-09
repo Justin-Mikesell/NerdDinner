@@ -1,10 +1,8 @@
 ﻿@model NerdDinner.Models.Dinner
 
-@{
-    ViewBag.Title = "Edit";
-}
 
-<h2>Edit Dinner</h2>
+
+<h2>Create</h2>
 
 @Html.ValidationSummary(true, "Please correct the errors and try again.", new { @class = "text-danger" })
 
@@ -17,7 +15,7 @@
         </p>
         <p>
             @Html.TextBox("Title", Model.Title) <br />
-            @Html.ValidationMessage("Title" ,"", new  { @class = "text-danger" })
+            @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
         </p>
         <p>
             <label for="EventDate">EventDate:</label>
@@ -69,7 +67,7 @@
             @Html.ValidationMessage("Longitude", "", new { @class = "text-danger" })
         </p>
         <p>
-            <input type="submit" value="Save"/>
+            <input type="submit" value="Save" />
         </p>
     </fieldset>
 }

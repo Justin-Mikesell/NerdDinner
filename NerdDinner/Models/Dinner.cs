@@ -6,6 +6,7 @@ using System.Web;
 
 namespace NerdDinner.Models
 {
+    
     public partial class Dinner
     {
         
@@ -19,7 +20,7 @@ namespace NerdDinner.Models
         {
             if (String.IsNullOrEmpty(Title))
             {
-                yield return new RuleViolation("Title required", "Title");
+                yield return new RuleViolation("Title is required", "Title");
             }
             if (String.IsNullOrEmpty(Description))
             {
