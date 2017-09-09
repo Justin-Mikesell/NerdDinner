@@ -1,5 +1,5 @@
 ﻿@model List<NerdDinner.Models.Dinner>
-
+@Styles.Render("~/Content/css")
 @{
     ViewBag.Title = "Index";
 }
@@ -18,5 +18,8 @@
             @dinner.EventDate.ToShortTimeString()
         </li>
     }
+
 </ul>
+
+
 

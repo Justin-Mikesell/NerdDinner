@@ -1,29 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using NerdDinner.Models;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace NerdDinner.Controllers
 {
     public class DinnersController : Controller
     {
 
-        Models.DinnerRepository dinnerRepository = new Models.DinnerRepository();
+        DinnerRepository dinnerRepository = new DinnerRepository();
+        private NerdDinnerDataContext db = new NerdDinnerDataContext();
+        const int pageSize = 10;
 
         // HTTP-GET: /Dinners/
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var dinners = dinnerRepository.FindUpcomingDinners().ToList();
+            int pageIndex = page ?? 1;
 
-            return View(dinners);
+            var dinners = db.Dinners.Where(d => d.EventDate >= DateTime.Now).OrderBy(d => d.EventDate);
+
+            return View(dinners.ToPagedList(pageIndex, pageSize));
+           
         }
 
         // HTTP-GET /DinnersDetails/2
-        
+
         public ActionResult Details(int id)
         {
-            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+            Dinner dinner = dinnerRepository.GetDinner(id);
 
             if (dinner == null)
             {
@@ -39,7 +47,7 @@ namespace NerdDinner.Controllers
 
         public ActionResult Edit(int id)
         {
-            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+            Dinner dinner = dinnerRepository.GetDinner(id);
 
             
 
@@ -51,7 +59,7 @@ namespace NerdDinner.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection formValues)
         {
-            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+            Dinner dinner = dinnerRepository.GetDinner(id);
 
             try
             {
@@ -75,14 +83,14 @@ namespace NerdDinner.Controllers
         // creates a new form for a dinner
         public ActionResult Create()
         {
-            Models.Dinner dinner = new Models.Dinner() { EventDate = DateTime.Now.AddDays(7) };
+            Dinner dinner = new Dinner() { EventDate = DateTime.Now.AddDays(7) };
 
             return View(dinner);
         }
         
         //Saves and adds dinner to db
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(Models.Dinner dinner)
+        public ActionResult Create(Dinner dinner)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +118,7 @@ namespace NerdDinner.Controllers
         //Delete a dinner
         public ActionResult Delete(int id)
         {
-            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+            Dinner dinner = dinnerRepository.GetDinner(id);
 
             if (dinner == null)
             {
@@ -126,7 +134,7 @@ namespace NerdDinner.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Delete(int id, string confirmButton)
         {
-            Models.Dinner dinner = dinnerRepository.GetDinner(id);
+            Dinner dinner = dinnerRepository.GetDinner(id);
 
             if (dinner == null)
             {
