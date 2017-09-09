@@ -20,6 +20,7 @@ namespace NerdDinner.Controllers
         }
 
         // HTTP-GET /DinnersDetails/2
+        
         public ActionResult Details(int id)
         {
             Models.Dinner dinner = dinnerRepository.GetDinner(id);
@@ -39,6 +40,8 @@ namespace NerdDinner.Controllers
         public ActionResult Edit(int id)
         {
             Models.Dinner dinner = dinnerRepository.GetDinner(id);
+
+            
 
             return View(dinner);
         }

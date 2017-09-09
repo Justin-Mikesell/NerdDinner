@@ -4,73 +4,10 @@
     ViewBag.Title = "Edit";
 }
 
+
 <h2>Edit Dinner</h2>
 
-@Html.ValidationSummary(true, "Please correct the errors and try again.", new { @class = "text-danger" })
-
-
-@using (Html.BeginForm())
-{
-    <fieldset>
-        <p>
-            <label for="Title">Dinner Title:</label>
-        </p>
-        <p>
-            @Html.TextBox("Title", Model.Title) <br />
-            @Html.ValidationMessage("Title" ,"", new  { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="EventDate">EventDate:</label>
-        </p>
-        <p>
-            @Html.TextBox("EventDate", String.Format("{0:g}", Model.EventDate)) <br />
-            @Html.ValidationMessage("EventDate", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="Description:">Description:</label>
-        </p>
-        <p>
-            @Html.TextArea("Description")<br />
-            @Html.ValidationMessage("Description", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="Address">Address:</label>
-        </p>
-        <p>
-            @Html.TextBox("Address") <br />
-            @Html.ValidationMessage("Address", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="Country">Country:</label>
-        </p>
-        <p>
-            @Html.TextBox("Country") <br />
-            @Html.ValidationMessage("Country", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="ContactPhone">Contact Phone:</label>
-        </p>
-        <p>
-            @Html.TextBox("ContactPhone") <br />
-            @Html.ValidationMessage("ContactPhone", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="Latitude">Latitude:</label>
-        </p>
-        <p>
-            @Html.TextBox("Latitude") <br />
-            @Html.ValidationMessage("Latitude", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <label for="Longitude">Longitude:</label>
-        </p>
-        <p>
-            @Html.TextBox("Longitude") <br />
-            @Html.ValidationMessage("Longitude", "", new { @class = "text-danger" })
-        </p>
-        <p>
-            <input type="submit" value="Save"/>
-        </p>
-    </fieldset>
+@{
+    Html.RenderPartial("DinnerForm");
 }
 
