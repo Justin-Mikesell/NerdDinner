@@ -21,10 +21,9 @@ namespace NerdDinner.Models
         // Retrieves all dinners after the the current date & time
         public IQueryable<Dinner> FindUpcomingDinners()
         {
-            return from dinner in db.Dinners
-                   where dinner.EventDate > DateTime.Now
-                   orderby dinner.EventDate
-                   select dinner;
+            return db.Dinners
+                .Where(dinner => dinner.EventDate > DateTime.Now)
+                .OrderBy(dinner => dinner.EventDate);
         }
 
 
@@ -36,7 +35,7 @@ namespace NerdDinner.Models
 
         // insert and delete
 
-            //Creates a dinner
+        //Creates a dinner
         public void Add(Dinner dinner)
         {
             db.Dinners.InsertOnSubmit(dinner);

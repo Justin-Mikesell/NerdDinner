@@ -11,34 +11,31 @@ namespace NerdDinner.Models
     {
         
         
-        public bool IsValid
-        {
-            get { return (GetRuleViolations().Count() == 0); }
-        }
+        public bool IsValid => !GetRuleViolations().Any();
 
         public IEnumerable<RuleViolation> GetRuleViolations()
         {
-            if (String.IsNullOrEmpty(Title))
+            if (string.IsNullOrEmpty(Title))
             {
                 yield return new RuleViolation("Title is required", "Title");
             }
-            if (String.IsNullOrEmpty(Description))
+            if (string.IsNullOrEmpty(Description))
             {
                 yield return new RuleViolation("Description Required", "Description");
             }
-            if (String.IsNullOrEmpty(Host))
+            if (string.IsNullOrEmpty(Host))
             {
                 yield return new RuleViolation("Host Required", "Host");
             }
-            if (String.IsNullOrEmpty(Address))
+            if (string.IsNullOrEmpty(Address))
             {
                 yield return new RuleViolation("Address Required", "Address");
             }
-            if (String.IsNullOrEmpty(Country))
+            if (string.IsNullOrEmpty(Country))
             {
                 yield return new RuleViolation("Country Required", "Country");
             }
-            if (String.IsNullOrEmpty(ContactPhone))
+            if (string.IsNullOrEmpty(ContactPhone))
             {
                 yield return new RuleViolation("Phone# Required", "ContactPhone");
             }
@@ -46,8 +43,6 @@ namespace NerdDinner.Models
             //{
             //    yield return new RuleViolation("Phone# does not match country", "ContactPhone");
             //}
-
-            yield break;
         }
 
         partial void OnValidate(ChangeAction action)
@@ -63,8 +58,8 @@ namespace NerdDinner.Models
 
     public class RuleViolation
     {
-        public string ErrorMessage { get; private set; }
-        public string PropertyName { get; private set; }
+        public string ErrorMessage { get; }
+        public string PropertyName { get; }
 
         public RuleViolation(string errorMessage, string propertyName)
         {

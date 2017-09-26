@@ -11,20 +11,20 @@ namespace NerdDinner.Controllers
 {
     public class DinnersController : Controller
     {
-
         DinnerRepository dinnerRepository = new DinnerRepository();
         private NerdDinnerDataContext db = new NerdDinnerDataContext();
-        const int pageSize = 10;
+        const int defaultPageSize = 10;
 
         // HTTP-GET: /Dinners/
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? start, int? end)
         {
-            int pageIndex = page ?? 1;
+            int pageStart = start ?? 0;
+            int pageSize = end - pageStart ?? defaultPageSize;
 
-            var dinners = db.Dinners.Where(d => d.EventDate >= DateTime.Now).OrderBy(d => d.EventDate);
+            var dinners = dinnerRepository.FindUpcomingDinners();
 
-            return View(dinners.ToPagedList(pageIndex, pageSize));
-           
+            return View(dinners.ToPagedList(pageStart, pageSize).ToList());
+
         }
 
         // HTTP-GET /DinnersDetails/2
@@ -49,7 +49,7 @@ namespace NerdDinner.Controllers
         {
             Dinner dinner = dinnerRepository.GetDinner(id);
 
-            
+
 
             return View(dinner);
         }
@@ -70,9 +70,9 @@ namespace NerdDinner.Controllers
                 return RedirectToAction("Details", new { id = dinner.DinnerID });
             }
 
-            catch 
+            catch
             {
-                foreach(var issue in dinner.GetRuleViolations())
+                foreach (var issue in dinner.GetRuleViolations())
                 {
                     ModelState.AddModelError(issue.PropertyName, issue.ErrorMessage);
                 }
@@ -87,7 +87,7 @@ namespace NerdDinner.Controllers
 
             return View(dinner);
         }
-        
+
         //Saves and adds dinner to db
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(Dinner dinner)
@@ -111,7 +111,7 @@ namespace NerdDinner.Controllers
                     }
                 }
             }
-            
+
             return View(dinner);
         }
 
