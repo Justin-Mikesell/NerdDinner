@@ -11,19 +11,19 @@ namespace NerdDinner.Controllers
 {
     public class DinnersController : Controller
     {
+
         DinnerRepository dinnerRepository = new DinnerRepository();
         private NerdDinnerDataContext db = new NerdDinnerDataContext();
-        const int defaultPageSize = 10;
+        const int pageSize = 10;
 
         // HTTP-GET: /Dinners/
-        public ActionResult Index(int? start, int? end)
+        public ActionResult Index(int? page)
         {
-            int pageStart = start ?? 0;
-            int pageSize = end - pageStart ?? defaultPageSize;
+            int pageIndex = page ?? 1;
 
             var dinners = dinnerRepository.FindUpcomingDinners();
 
-            return View(dinners.ToPagedList(pageStart, pageSize).ToList());
+            return View(dinners.ToPagedList(pageIndex, pageSize).ToList());
 
         }
 
